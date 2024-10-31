@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 
+const PAGINATION_LAST_NUMBER = 500;
+
 function PopularPeople() {
   const [people, setPeople] = useState({
     page: 1,
@@ -35,12 +37,12 @@ function PopularPeople() {
   return (
     <div>
       <h3 className="text-3xl my-8">Popular People</h3>
-      <Pagination currentPage={people?.page} setPeople={setPeople} />
       <ul className="flex flex-wrap gap-5">
         {people?.results?.map((person) => {
           return <PeopleItem person={person} key={person?.id} />;
         })}
       </ul>
+      <Pagination currentPage={people?.page} setPeople={setPeople} />
     </div>
   );
 }
@@ -67,15 +69,14 @@ function PeopleItem({ person }) {
 }
 
 function Pagination({ currentPage, setPeople }) {
-  console.log("==> ~ Pagination ~ currentPage:", currentPage);
   const [inBetweenNumber, setInBetweenNumber] = useState([]);
 
   useEffect(() => {
     if (currentPage === 2) {
       setInBetweenNumber([currentPage + 1, currentPage + 2]);
-    } else if (currentPage >= 3 && currentPage <= 497) {
+    } else if (currentPage >= 3 && currentPage <= PAGINATION_LAST_NUMBER - 3) {
       setInBetweenNumber([currentPage - 1, currentPage, currentPage + 1, currentPage + 2]);
-    } else if (currentPage === 500) {
+    } else if (currentPage === PAGINATION_LAST_NUMBER) {
       setInBetweenNumber([currentPage - 3, currentPage - 2, currentPage - 1]);
     }
   }, [currentPage]);
@@ -111,8 +112,12 @@ function Pagination({ currentPage, setPeople }) {
               />
             );
           })}
-        {currentPage <= 497 ? "..." : ""}
-        <PaginationNumber number={500} setPeople={setPeople} currentPage={currentPage} />
+        {currentPage <= PAGINATION_LAST_NUMBER - 3 ? "..." : ""}
+        <PaginationNumber
+          number={PAGINATION_LAST_NUMBER}
+          setPeople={setPeople}
+          currentPage={currentPage}
+        />
       </p>
 
       <button
@@ -121,7 +126,7 @@ function Pagination({ currentPage, setPeople }) {
             return { ...prevState, page: prevState.page + 1 };
           })
         }
-        disabled={currentPage === 500}
+        disabled={currentPage === PAGINATION_LAST_NUMBER}
         className="px-4 py-2 rounded-full text-white bg-secondary-500 hover:bg-secondary-700 hover:cursor-pointer disabled:cursor-not-allowed"
       >
         Next Page
