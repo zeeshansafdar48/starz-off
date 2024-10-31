@@ -6,11 +6,12 @@ export const routes = [
   {
     path: "/",
     element: <Home />,
-    errorElement: <ErrorPage />
-  },
-  {
-    path: "/popular-people",
-    element: <PopularPeople />,
-    errorElement: <ErrorPage />
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/popular-people",
+        element: <PopularPeople />
+      }
+    ]
   }
 ];

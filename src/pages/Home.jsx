@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 
 function App() {
   return (
-    <div className="p-10">
+    <div className="my-0 mx-28">
       <ul>
         <li>
           <Link to={"/"}>Home</Link>
@@ -11,6 +11,7 @@ function App() {
           <Link to={"/popular-people"}>People</Link>
         </li>
       </ul>
+      <Outlet />
     </div>
   );
 }
