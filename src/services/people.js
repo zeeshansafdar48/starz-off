@@ -1,4 +1,4 @@
-import { GET_OPTIONS, BASE_URL } from "./constants";
+import { GET_OPTIONS, BASE_URL } from "../constants";
 
 async function fetchPopularPeople(page) {
   const url = `${BASE_URL}/person/popular?language=en-US&page=${page}`;

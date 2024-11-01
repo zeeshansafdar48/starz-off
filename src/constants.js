@@ -9,4 +9,6 @@ const GET_OPTIONS = {
   }
 };
 
-export { API_KEY, BASE_URL, GET_OPTIONS };
+const IMAGE_BASE_URL = "https://media.themoviedb.org/t/p/w235_and_h235_face";
+
+export { API_KEY, BASE_URL, GET_OPTIONS, IMAGE_BASE_URL };

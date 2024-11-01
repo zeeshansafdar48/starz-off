@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { fetchPopularPeople } from "../services/people";
-
-const PAGINATION_LAST_NUMBER = 500;
+import { IMAGE_BASE_URL } from "../constants";
+import Pagination from "../components/Pagination";
 
 function PopularPeople() {
   const [people, setPeople] = useState({
@@ -19,9 +19,13 @@ function PopularPeople() {
     }
 
     fetchPeople();
-
-    return () => {};
   }, [people?.page]);
+
+  function setPage(pageNumber = 1, isPrevPage = false) {
+    setPeople((prevState) => {
+      return { ...prevState, page: isPrevPage ? prevState.page + pageNumber : pageNumber };
+    });
+  }
 
   return (
     <div>
@@ -31,7 +35,7 @@ function PopularPeople() {
           return <PeopleItem person={person} key={person?.id} />;
         })}
       </ul>
-      <Pagination currentPage={people?.page} setPeople={setPeople} />
+      <Pagination currentPage={people?.page} setPage={setPage} />
     </div>
   );
 }
@@ -40,7 +44,7 @@ function PeopleItem({ person }) {
   return (
     <li key={person?.id} className="border border-gray-300 rounded-lg w-80">
       <img
-        src={`https://media.themoviedb.org/t/p/w235_and_h235_face${person?.profile_path}`}
+        src={`${IMAGE_BASE_URL}${person?.profile_path}`}
         alt={person?.name}
         className="w-full rounded-t-lg"
       />
@@ -54,90 +58,6 @@ function PeopleItem({ person }) {
         </p>
       </div>
     </li>
-  );
-}
-
-function Pagination({ currentPage, setPeople }) {
-  const [inBetweenNumber, setInBetweenNumber] = useState([]);
-
-  useEffect(() => {
-    if (currentPage === 2) {
-      setInBetweenNumber([currentPage + 1, currentPage + 2]);
-    } else if (currentPage >= 3 && currentPage <= PAGINATION_LAST_NUMBER - 3) {
-      setInBetweenNumber([currentPage - 1, currentPage, currentPage + 1, currentPage + 2]);
-    } else if (currentPage === PAGINATION_LAST_NUMBER) {
-      setInBetweenNumber([currentPage - 3, currentPage - 2, currentPage - 1]);
-    }
-  }, [currentPage]);
-
-  return (
-    <div className="my-10 flex gap-4 justify-center items-center">
-      <button
-        onClick={() =>
-          setPeople((prevState) => {
-            return { ...prevState, page: prevState.page - 1 };
-          })
-        }
-        disabled={currentPage === 1}
-        className="px-4 py-2 rounded-full text-white bg-secondary-500 hover:bg-secondary-700 hover:cursor-pointer disabled:cursor-not-allowed"
-      >
-        Prev Page
-      </button>
-
-      <p className="text-sm">
-        <PaginationNumber number={1} setPeople={setPeople} currentPage={currentPage} />
-        {currentPage <= 2 && (
-          <PaginationNumber number={2} setPeople={setPeople} currentPage={currentPage} />
-        )}
-        {currentPage > 2 ? "..." : ""}
-        {currentPage >= 2 &&
-          inBetweenNumber?.map((num) => {
-            return (
-              <PaginationNumber
-                number={num}
-                setPeople={setPeople}
-                currentPage={currentPage}
-                key={num}
-              />
-            );
-          })}
-        {currentPage <= PAGINATION_LAST_NUMBER - 3 ? "..." : ""}
-        <PaginationNumber
-          number={PAGINATION_LAST_NUMBER}
-          setPeople={setPeople}
-          currentPage={currentPage}
-        />
-      </p>
-
-      <button
-        onClick={() =>
-          setPeople((prevState) => {
-            return { ...prevState, page: prevState.page + 1 };
-          })
-        }
-        disabled={currentPage === PAGINATION_LAST_NUMBER}
-        className="px-4 py-2 rounded-full text-white bg-secondary-500 hover:bg-secondary-700 hover:cursor-pointer disabled:cursor-not-allowed"
-      >
-        Next Page
-      </button>
-    </div>
-  );
-}
-
-function PaginationNumber({ number, setPeople, currentPage }) {
-  return (
-    <span
-      onClick={() =>
-        setPeople((prevState) => {
-          return { ...prevState, page: number };
-        })
-      }
-      className={`mx-1 hover:cursor-pointer hover:bg-secondary-100 py-1 px-2 rounded-full ${
-        currentPage === number ? "bg-secondary-300" : ""
-      }`}
-    >
-      {number}
-    </span>
   );
 }
 
