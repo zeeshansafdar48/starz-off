@@ -4,6 +4,8 @@ import { fetchPopularPeople } from "../services/people";
 import { IMAGE_BASE_URL } from "../constants";
 import Pagination from "../components/Pagination";
 import ProgressLoader from "../components/ProgressLoader";
+import defaultPerson from "../assets/images/default_people.svg";
+import ShimmerPeopleItem from "../components/ShimmerPeopleItem";
 
 function PopularPeople() {
   const [people, setPeople] = useState({
@@ -36,9 +38,11 @@ function PopularPeople() {
       {isLoading && <ProgressLoader />}
       <h3 className="text-3xl my-8">Popular People</h3>
       <ul className="flex flex-wrap gap-5">
-        {people?.results?.map((person) => {
-          return <PeopleItem person={person} key={person?.id} />;
-        })}
+        {isLoading
+          ? Array.from({ length: 20 }).map((_, idx) => <ShimmerPeopleItem key={idx} />)
+          : people?.results?.map((person) => {
+              return <PeopleItem person={person} key={person?.id} />;
+            })}
       </ul>
       <Pagination currentPage={people?.page} setPage={setPage} />
     </div>
@@ -46,13 +50,13 @@ function PopularPeople() {
 }
 
 function PeopleItem({ person }) {
+  const imagePath = person?.profile_path
+    ? `${IMAGE_BASE_URL}${person?.profile_path}`
+    : defaultPerson;
+
   return (
     <li key={person?.id} className="border border-gray-300 rounded-lg w-80">
-      <img
-        src={`${IMAGE_BASE_URL}${person?.profile_path}`}
-        alt={person?.name}
-        className="w-full rounded-t-lg"
-      />
+      <img src={imagePath} alt={person?.name} className="w-full rounded-t-lg" />
       <div className="pl-3 pb-2 mt-1">
         <h4 className="text-zinc-900 font-bold text-lg">{person?.name}</h4>
         <p className="text-sm text-black/60">
