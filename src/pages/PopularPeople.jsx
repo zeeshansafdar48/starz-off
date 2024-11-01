@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
+import { fetchPopularPeople } from "../services/people";
 
 const PAGINATION_LAST_NUMBER = 500;
 
@@ -12,24 +13,12 @@ function PopularPeople() {
   });
 
   useEffect(() => {
-    async function fetchPopularPeople() {
-      const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
-
-      const url = `https://api.themoviedb.org/3/person/popular?language=en-US&page=${people?.page}`;
-      const options = {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-          Authorization: `Bearer ${API_KEY}`
-        }
-      };
-
-      const result = await fetch(url, options);
-      const data = await result.json();
+    async function fetchPeople() {
+      const data = await fetchPopularPeople(people?.page);
       setPeople(data);
     }
 
-    fetchPopularPeople();
+    fetchPeople();
 
     return () => {};
   }, [people?.page]);
