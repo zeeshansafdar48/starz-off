@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { fetchPopularPeople } from "../services/people";
 import { IMAGE_BASE_URL } from "../constants";
 import Pagination from "../components/Pagination";
+import ProgressLoader from "../components/ProgressLoader";
 
 function PopularPeople() {
   const [people, setPeople] = useState({
@@ -11,11 +12,14 @@ function PopularPeople() {
     total_pages: 1,
     total_results: 0
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     async function fetchPeople() {
+      setIsLoading(true);
       const data = await fetchPopularPeople(people?.page);
       setPeople(data);
+      setIsLoading(false);
     }
 
     fetchPeople();
@@ -29,6 +33,7 @@ function PopularPeople() {
 
   return (
     <div>
+      {isLoading && <ProgressLoader />}
       <h3 className="text-3xl my-8">Popular People</h3>
       <ul className="flex flex-wrap gap-5">
         {people?.results?.map((person) => {

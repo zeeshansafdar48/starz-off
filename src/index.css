@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes load {
+  0% {
+    width: 0;
+  }
+  50% {
+    width: 75%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+/* Tailwind utility to apply the animation */
+.progress-bar {
+  animation: load 2s ease-in-out infinite;
+}
