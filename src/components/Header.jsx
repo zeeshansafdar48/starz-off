@@ -4,8 +4,11 @@ import { paths } from "../pages/routes";
 
 function Header() {
   return (
-    <div className="bg-primary-500 text-white">
-      <ul>
+    <div className="bg-primary-500 text-white px-16 py-5 h-16 font-semibold">
+      <ul className="flex gap-10">
+        <li>
+          <Link to={paths.root}>Logo</Link>
+        </li>
         <li>
           <Link to={paths.home}>Home</Link>
         </li>
