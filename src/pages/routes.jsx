@@ -1,15 +1,26 @@
 import ErrorPage from "./Error.jsx";
 import Home from "./Home.jsx";
+import Layout from "./Layout.jsx";
 import PopularPeople from "./PopularPeople.jsx";
+
+export const paths = {
+  root: "/",
+  home: "/home",
+  popularPeople: "/popular-people"
+};
 
 export const routes = [
   {
-    path: "/",
-    element: <Home />,
+    path: paths.root,
+    element: <Layout />,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/popular-people",
+        path: paths.home,
+        element: <Home />
+      },
+      {
+        path: paths.popularPeople,
         element: <PopularPeople />
       }
     ]
