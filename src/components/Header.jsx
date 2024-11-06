@@ -12,10 +12,8 @@ function Header() {
         <NavItem to={paths.home}>
           <img src={logo} alt="Logo" height={100} width={180} />
         </NavItem>
-        <NavItem to={paths.home}>Home</NavItem>
-        <NavItem to={paths.home}>Movies</NavItem>
-        <NavItem to={paths.popularPeople}>People</NavItem>
-        <NavList>Test</NavList>
+        <MoviesItems />
+        <PeopleItems />
       </ul>
     </div>
   );
@@ -23,14 +21,14 @@ function Header() {
 
 function NavItem({ to, children }) {
   return (
-    <li className="text-md hover:text-secondary-600 transition hover:cursor-pointer">
+    <li className="text-md hover:cursor-pointer">
       <Link to={to}>{children}</Link>
     </li>
   );
 }
 
-function NavList({ children }) {
-  const [showList, setShowList] = useState(true);
+function NavList({ title, children }) {
+  const [showList, setShowList] = useState(false);
 
   function handleShowList(isShowList) {
     setShowList(isShowList);
@@ -40,23 +38,43 @@ function NavList({ children }) {
     <li
       className="hover:cursor-pointer"
       onMouseEnter={() => handleShowList(true)}
-      onMouseLeave={() => handleShowList(true)}
+      onMouseLeave={() => handleShowList(false)}
     >
-      {children}
+      {title}
       {showList && (
-        <div className="bg-secondary-500 absolute flex gap-4 flex-col rounded-md">
-          <NavListItem>Popular</NavListItem>
-          <NavListItem>Now Playing</NavListItem>
-          <NavListItem>Upcoming</NavListItem>
-          <NavListItem>Top Rated</NavListItem>
+        <div className="bg-white absolute text-black/80 flex flex-col rounded-md py-2 w-44 border border-black-500">
+          {children}
         </div>
       )}
     </li>
   );
 }
 
-function NavListItem({ children }) {
-  return <div className="hover:bg-gray-300 mx-3">{children}</div>;
+function NavListItem({ children, to }) {
+  return (
+    <Link className="hover:bg-secondary-100/50 px-6 py-2 text-sm" to={to}>
+      {children}
+    </Link>
+  );
+}
+
+function MoviesItems() {
+  return (
+    <NavList title="Movies">
+      <NavListItem to={paths.popularPeople}>Popular</NavListItem>
+      <NavListItem to={paths.popularPeople}>Now Playing</NavListItem>
+      <NavListItem to={paths.popularPeople}>Upcoming</NavListItem>
+      <NavListItem to={paths.popularPeople}>Top Rated</NavListItem>
+    </NavList>
+  );
+}
+
+function PeopleItems() {
+  return (
+    <NavList title="People">
+      <NavListItem to={paths.popularPeople}>Popular People</NavListItem>
+    </NavList>
+  );
 }
 
 export default Header;
