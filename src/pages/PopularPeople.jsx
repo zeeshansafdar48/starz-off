@@ -6,6 +6,7 @@ import Pagination from "../components/Pagination";
 import ProgressLoader from "../components/ProgressLoader";
 import defaultPerson from "../assets/images/default_people.svg";
 import ShimmerPeopleItem from "../components/ShimmerPeopleItem";
+import PageHeading from "../components/PageHeading";
 
 function PopularPeople() {
   const [people, setPeople] = useState({
@@ -36,7 +37,7 @@ function PopularPeople() {
   return (
     <div>
       {isLoading && <ProgressLoader />}
-      <h3 className="text-3xl my-8">Popular People</h3>
+      <PageHeading>Popular People</PageHeading>
       <ul className="flex flex-wrap gap-5">
         {isLoading
           ? Array.from({ length: 20 }).map((_, idx) => <ShimmerPeopleItem key={idx} />)

@@ -61,7 +61,7 @@ function NavListItem({ children, to }) {
 function MoviesItems() {
   return (
     <NavList title="Movies">
-      <NavListItem to={paths.popularPeople}>Popular</NavListItem>
+      <NavListItem to={paths.popularMovies}>Popular</NavListItem>
       <NavListItem to={paths.popularPeople}>Now Playing</NavListItem>
       <NavListItem to={paths.popularPeople}>Upcoming</NavListItem>
       <NavListItem to={paths.popularPeople}>Top Rated</NavListItem>

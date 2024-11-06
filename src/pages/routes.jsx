@@ -1,12 +1,14 @@
 import ErrorPage from "./Error.jsx";
 import Home from "./Home.jsx";
 import Layout from "./Layout.jsx";
+import PopularMovies from "./Movies/Popular.jsx";
 import PopularPeople from "./PopularPeople.jsx";
 
 export const paths = {
   root: "/",
   home: "/home",
-  popularPeople: "/popular-people"
+  popularPeople: "/popular-people",
+  popularMovies: "/movies/popular"
 };
 
 export const routes = [
@@ -22,6 +24,10 @@ export const routes = [
       {
         path: paths.popularPeople,
         element: <PopularPeople />
+      },
+      {
+        path: paths.popularMovies,
+        element: <PopularMovies />
       }
     ]
   }
