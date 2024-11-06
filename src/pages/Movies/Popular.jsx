@@ -27,9 +27,14 @@ function PopularMovies() {
 
         if (data.results) {
           setMovies((prevState) => {
+            const mergeResults = [...prevState.results, ...data.results];
+            const uniqueResults = Array.from(
+              new Map(mergeResults.map((item) => [item.id, item])).values()
+            );
+
             return {
               page: data.page,
-              results: [...prevState.results, ...data.results],
+              results: uniqueResults,
               total_pages: data.total_pages,
               total_results: data.total_results
             };
