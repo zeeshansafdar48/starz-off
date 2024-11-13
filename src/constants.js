@@ -12,4 +12,9 @@ const GET_OPTIONS = {
 const IMAGE_BASE_URL = "https://media.themoviedb.org/t/p/w235_and_h235_face";
 const MOVIES_IMAGE_BASE_URL = "https://media.themoviedb.org/t/p/w220_and_h330_face";
 
-export { API_KEY, BASE_URL, GET_OPTIONS, IMAGE_BASE_URL, MOVIES_IMAGE_BASE_URL };
+const BUTTON_TYPES = {
+  DEFAULT: "default",
+  GRADIENT: "gradient"
+};
+
+export { API_KEY, BASE_URL, GET_OPTIONS, IMAGE_BASE_URL, MOVIES_IMAGE_BASE_URL, BUTTON_TYPES };
