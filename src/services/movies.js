@@ -8,4 +8,12 @@ async function fetchPopularMovies(page) {
   return data;
 }
 
-export { fetchPopularMovies };
+async function fetchMovieGenres() {
+  const url = `${BASE_URL}/genre/movie/list?language=en-US`;
+
+  const result = await fetch(url, GET_OPTIONS);
+  const data = await result.json();
+  return data;
+}
+
+export { fetchPopularMovies, fetchMovieGenres };

@@ -8,6 +8,7 @@ import { fetchPopularMovies } from "../../services/movies";
 import { MOVIES_IMAGE_BASE_URL } from "../../constants";
 import { formatDate } from "../../utils/formatDate";
 import CircularProgressBar from "./CircularProgressBar";
+import Search from "./Search";
 
 let isDataFetchedOnInitialLoad = false;
 
@@ -63,28 +64,31 @@ function PopularMovies() {
   }
 
   return (
-    <div>
+    <>
       {isLoading && <ProgressLoader />}
       <PageHeading>Popular Movies</PageHeading>
-      <InfiniteScroll
-        dataLength={movies?.results.length}
-        next={handleLoadMore}
-        hasMore={movies?.page < 500}
-      >
-        <ul className="flex flex-wrap gap-9 mb-10">
-          {movies?.results?.map((movie) => {
-            return <MovieItem key={movie?.id} movie={movie} />;
-          })}
-        </ul>
-      </InfiniteScroll>
-    </div>
+      <div className="flex gap-10">
+        <Search />
+        <InfiniteScroll
+          dataLength={movies?.results.length}
+          next={handleLoadMore}
+          hasMore={movies?.page < 500}
+        >
+          <ul className="flex flex-wrap gap-8 mb-10">
+            {movies?.results?.map((movie) => {
+              return <MovieItem key={movie?.id} movie={movie} />;
+            })}
+          </ul>
+        </InfiniteScroll>
+      </div>
+    </>
   );
 }
 
 function MovieItem({ movie }) {
   const ratings = movie?.vote_average * 10;
   return (
-    <li key={movie?.id} className="border border-gray-300 rounded-lg w-56">
+    <li key={movie?.id} className="border border-gray-300 rounded-lg w-48">
       <img
         src={`${MOVIES_IMAGE_BASE_URL}${movie.poster_path}`}
         alt={movie?.title}
